@@ -23,6 +23,7 @@ namespace NL.Prompt {
                             return options[input - 1];
                         }
                     }
+                    Output.DeleteLine();
                 } else {
                     //More than 9 items - Wait for the enter key to be pressed
                     input = ReadInt(1, options.Length);
