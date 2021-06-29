@@ -8,50 +8,50 @@ namespace NL.Diagnostics {
 
     /// <summary>
     ///		Can be used to precisely time single or multiple iterations
-    ///		of an <see cref="Action{T}"/> and get the first, average and last
+    ///		of a <see cref="Delegate"/> and get the first, average and last
     ///		execution <see cref="TimeSpan"/>.
     /// </summary>
     public class ActionTimer {
 
         /// <summary>
-        ///		The duration of the first iteration of the <see cref="action"/>.
+        ///		The duration of the first iteration of the <see cref="_action"/>.
         /// </summary>
         public TimeSpan FirstElapsed { get; private set; }
         /// <summary>
-        ///		The duration of the last iteration of the <see cref="action"/>.
+        ///		The duration of the last iteration of the <see cref="_action"/>.
         /// </summary>
         public TimeSpan LastElapsed { get; private set; }
 
         /// <summary>
         ///		The average duration of all executed iterations of the 
-        ///		<see cref="action"/>.
+        ///		<see cref="_action"/>.
         /// </summary>
         public TimeSpan Average
-            => new(elapsed.Sum(ts => ts.Ticks) / elapsed.Count);
+            => new(_elapsed.Sum(ts => ts.Ticks) / _elapsed.Count);
         /// <summary>
-        ///		Is <see langword="false"/> only if the <see cref="action"/> has been
+        ///		Is <see langword="false"/> only if the <see cref="_action"/> has been
         ///		last set to <see langword="null"/>, which causes <see cref="NullReferenceException"/>
         ///		when attempting to <see cref="Run()"/> this object.
         /// </summary>
         public bool IsActionSet
-            => action is not null;
+            => _action is not null;
 
-        protected object[] args;
-        protected Delegate action;
-        protected readonly List<TimeSpan> elapsed = new();
+        protected object[] _args;
+        protected Delegate _action;
+        protected readonly List<TimeSpan> _elapsed = new();
 
 
 
         /// <summary>
-        ///		Create an instance of <see cref="ActionTimer"/>, set the <see cref="action"/>
+        ///		Create an instance of <see cref="ActionTimer"/>, set the <see cref="_action"/>
         ///		to be timed, and run it once.
         /// </summary>
         /// <param name="args">
         ///		The parameters to be passed to the <paramref name="action"/> when invoked.
         /// </param>
         public ActionTimer(Delegate action, params object[] args) {
-            this.action = action;
-            this.args = args;
+            this._action = action;
+            this._args = args;
             Reset();
         }
 
@@ -68,23 +68,23 @@ namespace NL.Diagnostics {
         ///		The parameters to pass to the <paramref name="action"/> when running.
         /// </param>
         public void SetAction(Delegate action, params object[] args) {
-            this.action = action;
-            this.args = args;
+            this._action = action;
+            this._args = args;
             Reset();
         }
 
         /// <summary>
-        ///		Run and get the exeuction time of the <see cref="action"/> once.
+        ///		Run and get the exeuction time of the <see cref="_action"/> once.
         /// </summary>
         /// <returns>
-        ///		The execution time of the <see cref="action"/> in this iteration.
+        ///		The execution time of the <see cref="_action"/> in this iteration.
         /// </returns>
         public TimeSpan Run() {
             if (!IsActionSet)
-                throw new NullDelegateException(nameof(action));
+                throw new NullDelegateException(nameof(_action));
 
             LastElapsed = Time();
-            elapsed.Add(LastElapsed);
+            _elapsed.Add(LastElapsed);
             return LastElapsed;
         }
 
@@ -95,15 +95,15 @@ namespace NL.Diagnostics {
         /// </param>
         public TimeSpan Run(params object[] parameters) {
             if (!IsActionSet)
-                throw new NullDelegateException(nameof(action));
+                throw new NullDelegateException(nameof(_action));
 
             LastElapsed = Time(parameters);
-            elapsed.Add(LastElapsed);
+            _elapsed.Add(LastElapsed);
             return LastElapsed;
         }
 
         /// <summary>
-        ///		Run the <see cref="action"/> and get its execution time
+        ///		Run the <see cref="_action"/> and get its execution time
         ///		<paramref name="iterations"/> times.
         /// </summary>
         /// <param name="iterations">
@@ -117,7 +117,7 @@ namespace NL.Diagnostics {
             TimeSpan[] times = new TimeSpan[iterations];
 
             if (!IsActionSet)
-                throw new NullDelegateException(nameof(action));
+                throw new NullDelegateException(nameof(_action));
 
             for (int i = 0; i < iterations; i++) {
                 times[i] = Time();
@@ -125,7 +125,7 @@ namespace NL.Diagnostics {
 
             LastElapsed = times[^1];
             averageTicks = times.Sum(ts => ts.Ticks) / iterations;
-            elapsed.AddRange(times);
+            _elapsed.AddRange(times);
             return new TimeSpan(averageTicks);
         }
 
@@ -139,7 +139,7 @@ namespace NL.Diagnostics {
             TimeSpan[] times = new TimeSpan[iterations];
 
             if (!IsActionSet)
-                throw new NullDelegateException(nameof(action));
+                throw new NullDelegateException(nameof(_action));
 
             for (int i = 0; i < iterations; i++) {
                 times[i] = Time(parameters);
@@ -147,17 +147,17 @@ namespace NL.Diagnostics {
 
             LastElapsed = times[^1];
             averageTicks = times.Sum(ts => ts.Ticks) / iterations;
-            elapsed.AddRange(times);
+            _elapsed.AddRange(times);
             return new TimeSpan(averageTicks);
         }
 
         /// <summary>
-        ///		Clear all stored execution times but keep the <see cref="action"/> intact,
-        ///		and run the <see cref="action"/> once if possible, otherwise sets all times
+        ///		Clear all stored execution times but keep the <see cref="_action"/> intact,
+        ///		and run the <see cref="_action"/> once if possible, otherwise sets all times
         ///		to <see langword="default"/>(<see cref="TimeSpan"/>).
         /// </summary>
         public void Reset() {
-            elapsed.Clear();
+            _elapsed.Clear();
             try {
                 FirstElapsed = Run();
             } catch {
@@ -169,13 +169,13 @@ namespace NL.Diagnostics {
         private TimeSpan Time() {
             Stopwatch stopwatch = new();
 
-            if (args is null || args.Length == 0) {
+            if (_args is null || _args.Length == 0) {
                 stopwatch.Start();
-                _ = action.DynamicInvoke();
+                _ = _action.DynamicInvoke();
                 stopwatch.Stop();
             } else {
                 stopwatch.Start();
-                _ = action.DynamicInvoke(args);
+                _ = _action.DynamicInvoke(_args);
                 stopwatch.Stop();
             }
 
@@ -186,7 +186,7 @@ namespace NL.Diagnostics {
             Stopwatch stopwatch = new();
 
             stopwatch.Start();
-            _ = action.DynamicInvoke(parameters);
+            _ = _action.DynamicInvoke(parameters);
             stopwatch.Stop();
 
             return stopwatch.Elapsed;
