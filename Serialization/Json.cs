@@ -2,7 +2,7 @@
 using NL.Exceptions;
 using System.IO;
 
-namespace NL {
+namespace NL.Serialization {
 
     /// <summary>
     ///		JSON Serialization and Deserialization methods.

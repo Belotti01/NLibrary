@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Timers;
 
-namespace NL {
+namespace NL.Serialization {
     /// <summary>
     ///     Collection of methods used to safely access files as text files, without risking
     ///     deadlocks or <see cref="IOException"/>s.
