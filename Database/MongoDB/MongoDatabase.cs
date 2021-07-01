@@ -45,7 +45,7 @@ namespace NL.Database.MongoDB {
             if(_collections.ContainsKey(typeof(T))) {
                 throw new DuplicateItemException(nameof(collectionName), collectionName);
             }else {
-                typeof(T).GetMethod(nameof(Schema<T>.InitializeCollection)).Invoke(null, new object[] { collectionName });
+                Schema<T>.InitializeCollection(collection);
                 _collections.Add(typeof(T), collectionName);
             }
         }

@@ -30,14 +30,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoDB.Bson" Version="2.13.0-beta1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.13.0-beta1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <Compile Remove="Attributes\**" />
+    <Compile Remove="Utils\**" />
+    <EmbeddedResource Remove="Attributes\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <None Remove="Attributes\**" />
+    <None Remove="Utils\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Attributes\" />
-    <Folder Include="Utils\" />
+    <PackageReference Include="MongoDB.Bson" Version="2.13.0-beta1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.0-beta1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>
