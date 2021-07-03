@@ -89,7 +89,6 @@ namespace NL.Database.MongoDB {
             _databaseName = default;
         }
 
-        /// <inheritdoc cref="ICloneable.Clone"/>
         public object Clone() {
             MongoDatabase copy = new(_databaseName, _client.Settings);
             copy._collections = _collections;
