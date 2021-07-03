@@ -6,10 +6,14 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace NL.Database.MongoDB {
 
     public abstract class Schema<T> where T : Schema<T> {
+        /// <summary>
+        ///     This document's unique ID.
+        /// </summary>
         [BsonId]
         public ObjectId Id { get; protected set; }
 
@@ -20,9 +24,7 @@ namespace NL.Database.MongoDB {
         private static IMongoCollection<T> _collection;
 
         internal static void InitializeCollection(IMongoCollection<T> collection) {
-            if (_collection is null) {
-                _collection = collection;
-            }
+            _collection = collection;
         }
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace NL.Database.MongoDB {
         /// <param name="exception">The thrown <see cref="Exception"/> in case of failure, 
         /// <see langword="null"/> otherwise.</param>
         /// <returns><see langword="true"/> if the document is successfully created, <see langword="false"/> otherwise.</returns>
-        protected bool TryUpload([Optional] out Exception exception) {
+        public bool TryUpload([Optional] out Exception exception) {
             try {
                 _collection.InsertOne((T)this);
                 exception = null;
@@ -94,7 +96,7 @@ namespace NL.Database.MongoDB {
 
         /// <returns></returns>
         /// <inheritdoc cref="TryUpload(out Exception)"/>
-        protected void Upload() {
+        public void Upload() {
             _collection.InsertOne((T)this);
         }
 
@@ -117,7 +119,7 @@ namespace NL.Database.MongoDB {
         /// <returns></returns>
         /// <inheritdoc cref="TryUpdate{E}(string, E)"/>
         protected void Update<E>(string nameofProperty, E newValue) {
-            var memberData = typeof(T).GetProperty(nameofProperty);
+            PropertyInfo memberData = typeof(T).GetProperty(nameofProperty);
             var attribute = (BsonElementAttribute)memberData.GetCustomAttributes(true)
                 .Where(attr => attr is BsonElementAttribute)
                 .FirstOrDefault();
@@ -134,7 +136,7 @@ namespace NL.Database.MongoDB {
         /// <summary>
         ///     Delete the current document from the database.
         /// </summary>
-        protected void RemoveDocument() {
+        public void RemoveDocument() {
             _collection.DeleteOne<T>(doc => doc.Id == Id);
         }
     }
