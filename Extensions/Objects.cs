@@ -54,6 +54,26 @@ namespace NL.Extensions {
             }
             return stack.ToArray();
         }
+
+        /// <summary>
+        ///     Compare this item to the default value of the type
+        ///     <typeparamref name="T"/>.
+        /// </summary>
+        /// <returns>
+        ///     <see langword="true"/> only if the value of this item
+        ///     equals:
+        ///     <list type="bullet">
+        ///         <item>  
+        ///                 <see langword="null"/> - if <typeparamref name="T"/> is 
+        ///                 a class or a <see cref="Nullable"/> type;
+        ///         </item>
+        ///         <item>  
+        ///                 <see langword="default"/> - if <typeparamref name="T"/> is a structure.
+        ///         </item>
+        ///     </list>
+        /// </returns>
+        public static bool IsDefault<T>(this T item)
+            => EqualityComparer<T>.Default.Equals(item, default);
     }
 
 }
