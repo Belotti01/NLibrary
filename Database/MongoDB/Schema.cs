@@ -33,7 +33,7 @@ namespace NL.Database.MongoDB {
         /// </summary>
         /// <param name="lambda">Documents will only be retrieved if this expression returns <see langword="true"></see></param>
         /// <returns>An <see cref="IAsyncCursor{TDocument}"/> that asynchronously iterates through the retrievable documents.</returns>
-        protected static IAsyncCursor<T> GetCursor(Expression<Func<T, bool>> lambda) {
+        public static IAsyncCursor<T> GetCursor(Expression<Func<T, bool>> lambda) {
             return _collection.FindSync<T>(
                 new FilterDefinitionBuilder<T>()
                     .Where(lambda)
@@ -48,14 +48,14 @@ namespace NL.Database.MongoDB {
         /// </summary>
         /// <returns>A <see cref="List{T}"/> containing all the retrieved documents.</returns>
         /// <inheritdoc cref="GetCursor(Expression{Func{T, bool}})"/>
-        protected static List<T> GetAll(Expression<Func<T, bool>> lambda)
+        public static List<T> GetAll(Expression<Func<T, bool>> lambda)
             => GetCursor(lambda).ToList();
 
         /// <summary>
         /// Get a List of all T objects in the Collection. 
         /// NOTE: Only use if getting all documents is strictly necessary to avoid traffic.
         /// </summary>
-        protected static List<T> GetAll()
+        public static List<T> GetAll()
             => GetCursor(x => true).ToList();
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace NL.Database.MongoDB {
         /// <returns>The first document found as an object of type <typeparamref name="T"/>, or
         /// <see langword="default"/> if no result is found.</returns>
         /// <inheritdoc cref="GetCursor(Expression{Func{T, bool}})"/>
-        protected static T GetOneOrDefault(Expression<Func<T, bool>> lambda)
+        public static T GetOneOrDefault(Expression<Func<T, bool>> lambda)
             => GetCursor(lambda).FirstOrDefault();
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace NL.Database.MongoDB {
         /// </summary>
         /// <returns><see langword="true"/> if a fitting document is found, <see langword="false"/> otherwise.</returns>
         /// <inheritdoc cref="GetCursor(Expression{Func{T, bool}})"/>
-        protected static bool Exists(Expression<Func<T, bool>> lambda)
+        public static bool Exists(Expression<Func<T, bool>> lambda)
             => GetOneOrDefault(lambda) is not null;
 
         /// <summary>
