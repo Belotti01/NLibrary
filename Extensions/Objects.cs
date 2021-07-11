@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NL.Extensions {
 
@@ -48,11 +49,9 @@ namespace NL.Extensions {
         ///     call to <see cref="object.ToString"/> on the type <typeparamref name="T"/>.
         /// </returns>
         public static string[] ToStringArray<T>(this IEnumerable<T> values) {
-            List<string> stack = new();
-            foreach (T value in values) {
-                stack.Add(value.ToString());
-            }
-            return stack.ToArray();
+            return values
+                .Select(v => v.ToString())
+                .ToArray();
         }
 
         /// <summary>
