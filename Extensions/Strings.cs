@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace NL.Extensions {
@@ -140,6 +141,13 @@ namespace NL.Extensions {
         /// <inheritdoc cref="Join(IEnumerable{string}, char)"/>
         public static string Join(this IEnumerable<string> strings, string separator)
             => string.Join(separator, strings);
+
+        public static string Invert(this string baseString) {
+            StringBuilder str = new();
+            for(int i = baseString.Length - 1; i >= 0; i++)
+                str.Append(baseString[i]);
+            return str.ToString();
+        }
     }
 
 }
