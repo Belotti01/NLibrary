@@ -71,7 +71,7 @@ namespace NL.Extensions {
         ///         </item>
         ///     </list>
         /// </returns>
-        public static bool IsDefault<T>(this T item)
+        public static bool IsNullOrDefault<T>(this T item)
             => EqualityComparer<T>.Default.Equals(item, default);
     }
 

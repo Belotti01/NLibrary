@@ -58,9 +58,7 @@ namespace NL.Prompt {
         /// </param>
         /// <inheritdoc cref="PickOne{T}(T[])"/>
         public static T PickOne<T>(Dictionary<string, T> options) {
-            IEnumerable<string> list = from opt 
-                                       in options 
-                                       select opt.Key;
+            IEnumerable<string> list = options.Select(opt => opt.Key);
             return options[PickOne(list)];
         }
 
