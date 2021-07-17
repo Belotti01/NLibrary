@@ -142,9 +142,9 @@ namespace NL.Extensions {
         public static string Join(this IEnumerable<string> strings, string separator)
             => string.Join(separator, strings);
 
-        public static string Invert(this string baseString) {
+        public static string Inverted(this string baseString) {
             StringBuilder str = new();
-            for(int i = baseString.Length - 1; i >= 0; i++)
+            for(int i = baseString.Length - 1; i >= 0; i--)
                 str.Append(baseString[i]);
             return str.ToString();
         }
