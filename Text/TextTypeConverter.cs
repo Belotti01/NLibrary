@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NL.Text {
     internal class TextTypeConverter {
-        internal static Dictionary<char, char> Characters;
+        internal Dictionary<char, char> Characters;
 
         internal TextTypeConverter(string baseCharacters, string convertedCharacters) {
             Characters = new();
