@@ -100,11 +100,13 @@ namespace NL.Extensions {
             }
 
             return decimals < parts[1].Length
-                ? ret.Append(parts[1][..decimals])
+                ? ret.Append('.')
+                    .Append(parts[1][..decimals])
                     .ToString()
                 : ret.Append('.')
-                .Append('0', decimals - parts[1].Length)
-                .ToString();
+                    .Append(parts[1])
+                    .Append('0', decimals - parts[1].Length)
+                    .ToString();
         }
 
         /// <inheritdoc cref="ToString(double, int)"/>
