@@ -31,11 +31,8 @@
 
   <ItemGroup>
     <Compile Remove="Attributes\**" />
-    <Compile Remove="Utils\**" />
     <EmbeddedResource Remove="Attributes\**" />
-    <EmbeddedResource Remove="Utils\**" />
     <None Remove="Attributes\**" />
-    <None Remove="Utils\**" />
   </ItemGroup>
 
   <ItemGroup>
