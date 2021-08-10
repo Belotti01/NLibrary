@@ -19,11 +19,11 @@ namespace NL.Extensions {
         ///     otherwise a new <see cref="string"/> containing the first <paramref name="maxLength"/>
         ///     characters of the original.
         /// </returns>
-        public static string Truncate(this string str, uint maxLength) {
+        public static string Truncate(this string str, int maxLength) {
             if(str.Length <= maxLength)
                 return str;
             else
-                return str[..(int)maxLength];
+                return str[..maxLength];
         }
 
         /// <summary>
@@ -38,13 +38,13 @@ namespace NL.Extensions {
         ///     "...".
         /// </returns>
         /// <inheritdoc cref="Truncate(string, uint)"/>
-        public static string TruncateWithSuspension(this string str, uint maxLength) {
-            if(maxLength < 3)
+        public static string TruncateWithSuspension(this string str, int maxLength) {
+            if(maxLength is < 3 and >= 0)
                 return "...";
             else if(str.Length < maxLength)
                 return str;
             else
-                return $"{str[..(int)(maxLength - 3)]}...";
+                return $"{str[..(maxLength - 3)]}...";
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace NL.Extensions {
         /// </returns>
         public static string[] SplitBySpaces(this string str) {
             return Regex.Split(str, @"\s+")
-                .Where(s => !s.IsEmpty())
+                .RemoveDefaults()
                 .ToArray();
         }
 
@@ -177,7 +177,7 @@ namespace NL.Extensions {
             // Avoided using a Regex for HUGE performance boost;
             // Tested times with the same parameters:
             // Average with Regex.Split: ~58ms
-            // Average with THIS METHOD: ~2ms
+            // Average with this method: ~2ms
             Stack<string> list = new();
             StringBuilder item = new();
 
@@ -202,5 +202,187 @@ namespace NL.Extensions {
         /// <inheritdoc cref="Separate(string, bool, char[])"/>
         public static string[] Separate(this string str, params char[] separators)
             => str.Separate(false, separators);
+
+        /// <summary>
+        ///     Search for the first instance of a number in the 
+        ///     <see langword="string"/>.
+        /// </summary>
+        /// <param name="number">
+        ///     The first <see langword="int"/> found in the <see langword="string"/>,
+        ///     or 0 if none is present.
+        /// </param>
+        /// <returns>
+        ///     <see langword="true"/> if a valid integer number is found, 
+        ///     <see langword="false"/> otherwise.
+        /// </returns>
+        public static bool TryFindInteger(this string str, out int number) {
+            StringBuilder found = new();
+            bool result = false;
+
+            for(int i = 0; i < str.Length; i++) { 
+                if(char.IsDigit(str, i)) {
+                    found.Append(str[i]);
+                } else if(found.Length != 0) {
+                    result = true;
+                    break;
+                }
+            }
+
+            number = result 
+                ? int.Parse(found.ToString())
+                : default;
+            return result;
+        }
+        
+        /// <summary>
+        ///     Search for instances of <see langword="int"/> in the 
+        ///     <see langword="string"/>.
+        /// </summary>
+        /// <param name="numbers">
+        ///     All the <see langword="int"/> values found in the 
+        ///     <see langword="string"/>, or an empty array if none is present.
+        /// </param>
+        /// <returns>
+        ///     <see langword="true"/> if at least one valid integer value 
+        ///     is found, <see langword="false"/> otherwise.
+        /// </returns>
+        public static bool TryFindIntegers(this string str, out int[] numbers) {
+            StringBuilder found = new();
+            List<int> parsed = new();
+
+            for(int i = 0; i < str.Length; i++) { 
+                if(char.IsDigit(str, i)) {
+                    found.Append(str[i]);
+                } else if(found.Length != 0) {
+                    parsed.Add(int.Parse(found.ToString()));
+                    found.Clear();
+                }
+            }
+
+            if(found.Length != 0) {
+                parsed.Add(int.Parse(found.ToString()));
+            }
+
+            numbers = parsed.ToArray();
+            return numbers.Length != 0;
+        }
+
+        /// <summary>
+        ///     Search for the first instance of a number in the 
+        ///     <see langword="string"/>.
+        /// </summary>
+        /// <param name="number">
+        ///     The first <see langword="double"/> found in the <see langword="string"/>,
+        ///     or 0 if none is present.
+        /// </param>
+        /// <returns>
+        ///     <see langword="true"/> if a valid double number is found, 
+        ///     <see langword="false"/> otherwise.
+        /// </returns>
+        public static bool TryFindDouble(this string str, out double number) {
+            StringBuilder found = new();
+            bool pointFound = false;
+            bool result;
+
+            for(int i = 0; i < str.Length; i++) {
+                if(char.IsDigit(str, i)) {
+                    found.Append(str[i]);
+                }else if((str[i] == '.' || str[i] == ',') && !pointFound) {
+                    if(found.Length == 0) {
+                        found.Append('0');
+                    }
+                    pointFound = true;
+                    found.Append('.');
+                } else if(found.Length != 0) {
+                    break;
+                }
+            }
+
+            result = found.Length != 0;
+            number = result
+                ? double.Parse(found.ToString())
+                : default;
+            return result;
+        }
+
+        /// <summary>
+        ///     Search for instances of <see langword="double"/> in the 
+        ///     <see langword="string"/>.
+        /// </summary>
+        /// <param name="numbers">
+        ///     All the <see langword="double"/> values found in the 
+        ///     <see langword="string"/>, or an empty array if none is present.
+        /// </param>
+        /// <returns>
+        ///     <see langword="true"/> if at least one valid double value 
+        ///     is found, <see langword="false"/> otherwise.
+        /// </returns>
+        public static bool TryFindDoubles(this string str, out double[] numbers) {
+            StringBuilder found = new();
+            List<double> parsed = new();
+            bool pointFound = false;
+
+            for(int i = 0; i < str.Length; i++) {
+                if(char.IsDigit(str, i)) {
+                    found.Append(str[i]);
+                } else if((str[i] == '.' || str[i] == ',') && !pointFound) {
+                    if(found.Length == 0) {
+                        found.Append('0');
+                    }
+                    pointFound = true;
+                    found.Append('.');
+                } else if(found.Length != 0) {
+                    parsed.Add(double.Parse(found.ToString()));
+                    found.Clear();
+                    pointFound = false;
+                }
+            }
+
+            if(found.Length != 0) {
+                parsed.Add(double.Parse(found.ToString()));
+            }
+
+            numbers = parsed.ToArray();
+            return numbers.Length != 0;
+        }
+
+        /// <summary>
+        ///     Search for the first instance of a number in the 
+        ///     <see langword="string"/>.
+        /// </summary>
+        /// <param name="number">
+        ///     The first <see langword="float"/> found in the <see langword="string"/>,
+        ///     or 0 if none is present.
+        /// </param>
+        /// <returns>
+        ///     <see langword="true"/> if a valid float number is found, 
+        ///     <see langword="false"/> otherwise.
+        /// </returns>
+        public static bool TryFindFloat(this string str, out float number) {
+            bool res = str
+                .TryFindDouble(out double tempNumber);
+            number = (float)tempNumber;
+            return res;
+        }
+
+        /// <summary>
+        ///     Search for instances of <see langword="float"/> in the 
+        ///     <see langword="string"/>.
+        /// </summary>
+        /// <param name="numbers">
+        ///     All the <see langword="float"/> values found in the 
+        ///     <see langword="string"/>, or an empty array if none is present.
+        /// </param>
+        /// <returns>
+        ///     <see langword="true"/> if at least one valid float value 
+        ///     is found, <see langword="false"/> otherwise.
+        /// </returns>
+        public static bool TryFindFloats(this string str, out float[] numbers) {
+            bool res = str.TryFindDoubles(out double[] tempNumber);
+            numbers = tempNumber
+                .Select(n => (float)n)
+                .ToArray();
+            return res;
+        }
     }
 }
