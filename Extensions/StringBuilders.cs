@@ -16,7 +16,7 @@ namespace NL.Extensions {
         ///     <see langword="false"/> otherwise.
         /// </returns>
         public static bool IsEmptyOrWhitespace(this StringBuilder str) {
-            return str.ToString().IsEmpty();
+            return str is null || str.ToString().IsEmpty();
         }
 
         /// <summary>
