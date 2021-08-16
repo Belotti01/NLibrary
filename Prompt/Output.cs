@@ -3,6 +3,29 @@
 namespace NL.Prompt {
 
     public static class Output {
+
+        public static void Write(string text) {
+            Console.ResetColor();
+            Console.Write(text);
+        }
+
+        public static void WriteLine(string text) {
+            Console.ResetColor();
+            Console.WriteLine(text);
+        }
+
+        public static void Write(string text, ConsoleColor color) {
+            Console.ForegroundColor = color;
+            Console.Write(text);
+            Console.ResetColor();
+        }
+
+        public static void WriteLine(string text, ConsoleColor color) {
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
+
         /// <summary>
         ///     Delete a single line from the <see cref="Console"/> interface.
         /// </summary>
