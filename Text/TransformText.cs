@@ -5,7 +5,7 @@ namespace NL.Text {
     /// <summary>
     ///     Methods to modify the characters contained in a <see langword="string"/>.
     /// </summary>
-    public static class Transform {
+    public static class TransformText {
         private const string BaseAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string BaseAlphabetAndNumbers = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         private const string BaseAlphabetNumbersAndSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890./-=[];',<>?:|{}!@#$%^&*()_+";
@@ -38,6 +38,25 @@ namespace NL.Text {
         /// </returns>
         public static string Convert(string baseString, TextType textType) {
             return Converters[textType].Convert(baseString);
+        }
+
+        /// <summary>
+        ///     Convert the <paramref name="baseChar"/> to its 
+        ///     <paramref name="textType"/>'s counterpart, or keep them as-is if not
+        ///     available.
+        /// </summary>
+        /// <param name="baseChar">
+        ///     The <see langword="char"/> to convert.
+        /// </param>
+        /// <param name="textType">
+        ///     The <see cref="TextType"/> to convert to.
+        /// </param>
+        /// <returns>
+        ///     The <paramref name="baseChar"/> converted to the specified
+        ///     <see cref="TextType"/>, or kept the same if not convertible.
+        /// </returns>
+        public static char Convert(char baseChar, TextType textType) {
+            return Converters[textType].Convert(baseChar);
         }
     }
 

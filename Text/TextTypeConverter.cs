@@ -23,5 +23,12 @@ namespace NL.Text {
             }
             return str.ToString();
         }
+
+        internal char Convert(char original) {
+            if(Characters.ContainsKey(original))
+                return Characters[original];
+            else
+                return original;
+        }
     }
 }
