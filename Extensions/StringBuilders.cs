@@ -15,7 +15,7 @@ namespace NL.Extensions {
         ///     contains no characters or whitespace characters only;
         ///     <see langword="false"/> otherwise.
         /// </returns>
-        public static bool IsEmptyOrWhitespace(this StringBuilder str) {
+        public static bool IsEmptyOrWhiteSpace(this StringBuilder str) {
             return str is null || str.ToString().IsEmpty();
         }
 
