@@ -128,6 +128,80 @@ namespace NL.Prompt {
                 Output.DeleteLine();
             }
         }
+
+        public static char ReadChar() {
+            char input;
+            do {
+                input = Console.ReadKey().KeyChar;
+            } while(char.IsControl(input));
+            
+            return input;
+        }
+
+        /// <summary>
+        ///     Read the first <see langword="char"/> user-input included in the
+        ///     specified <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">
+        ///     The possible return values awaited from the user.
+        /// </param>
+        /// <returns>
+        ///     A character picked by the user contained inside <paramref name="options"/>.
+        /// </returns>
+        public static char ReadChar(params char[] options) {
+            char input;
+            do {
+                input = Console.ReadKey().KeyChar;
+            } while(char.IsControl(input) || !options.Contains(input));
+
+            return input;
+        }
+
+        /// <summary>
+        ///     Read the first <see langword="char"/> user-input included in the
+        ///     specified <paramref name="options"/>, case-insensitive.
+        /// </summary>
+        /// <param name="options">
+        ///     The possible return values awaited from the user.
+        /// </param>
+        /// <returns>
+        ///     The upper-case version of the character picked by the user, contained 
+        ///     inside <paramref name="options"/>.
+        /// </returns>
+        public static char ReadCharToUpper(params char[] options) {
+            char input;
+            options = options
+                .Select(c => char.ToUpper(c))
+                .ToArray();
+            do {
+                input = Console.ReadKey().KeyChar;
+            } while(char.IsControl(input) || !options.Contains(input.ToUpper()));
+
+            return input.ToUpper();
+        }
+
+        /// <summary>
+        ///     Read the first <see langword="char"/> user-input included in the
+        ///     specified <paramref name="options"/>, case-insensitive.
+        /// </summary>
+        /// <param name="options">
+        ///     The possible return values awaited from the user.
+        /// </param>
+        /// <returns>
+        ///     The lower-case version of the character picked by the user, contained 
+        ///     inside <paramref name="options"/>.
+        /// </returns>
+        public static char ReadCharToLower(params char[] options) {
+            char input;
+            options = options
+                .Select(c => c.ToLower())
+                .ToArray();
+            do {
+                input = Console.ReadKey().KeyChar;
+            } while(char.IsControl(input) || !options.Contains(input.ToLower()));
+
+            return input.ToLower();
+        }
     }
 
 }
