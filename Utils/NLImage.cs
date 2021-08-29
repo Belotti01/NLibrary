@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Linq;
 
 namespace NL.Utils {
     public static class NLImage {
@@ -104,10 +107,22 @@ namespace NL.Utils {
 
         public static void ToMonochrome(ref Bitmap bitmap, Color color) {
             Color pixel;
+
             for(int c = 0; c < bitmap.Width; c++) {
                 for(int r = 0; r < bitmap.Height; r++) {
                     pixel = bitmap.GetPixel(c, r);
-                    if(pixel.A != 0) {
+                    if(pixel.A != 0)
+                        bitmap.SetPixel(c, r, Color.FromArgb(color.R, color.G, color.B, pixel.A));
+                }
+            }
+        }
+
+        public static void ToMonochrome(ref Bitmap bitmap, Color color, params Color[] keepColors) {
+            Color pixel;
+            for(int c = 0; c < bitmap.Width; c++) {
+                for(int r = 0; r < bitmap.Height; r++) {
+                    pixel = bitmap.GetPixel(c, r);
+                    if(!keepColors.Any(c => c.Equals(pixel))) {
                         bitmap.SetPixel(c, r, color);
                     }
                 }
@@ -118,6 +133,66 @@ namespace NL.Utils {
             Bitmap bm = image as Bitmap;
             ToMonochrome(ref bm, color);
             image = bm;
+        }
+
+        public static void ToMonochrome(ref Image image, Color color, params Color[] keepColors) {
+            Bitmap bm = image as Bitmap;
+            ToMonochrome(ref bm, color, keepColors);
+            image = bm;
+        }
+
+        public static ImageCodecInfo GetEncoder(ImageFormat format) {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            return codecs
+                .FirstOrDefault(c => c.FormatID == format.Guid);
+        }
+
+        public static Bitmap Rotated(this Bitmap bm, float angle) {
+            float xmin, xmax, ymin, ymax;
+            int width, height;
+            Bitmap result;
+            Matrix rotateAtOrigin = new();
+            Matrix rotateAtCenter = new();
+
+            rotateAtOrigin.Rotate(angle);
+
+            // Find the size of the new Bitmap
+            PointF[] points =
+            {
+                new PointF(0, 0),
+                new PointF(bm.Width, 0),
+                new PointF(bm.Width, bm.Height),
+                new PointF(0, bm.Height),
+            };
+            rotateAtOrigin.TransformPoints(points);
+            GetBounds(points, out xmin, out xmax, out ymin, out ymax);
+
+            // Create new Bitmap
+            width = (int)Math.Round(xmax - xmin);
+            height = (int)Math.Round(ymax - ymin);
+            result = new Bitmap(width, height);
+
+            rotateAtCenter.RotateAt(angle, new PointF(width / 2f, height / 2f));
+
+            using(Graphics gr = Graphics.FromImage(result)) {
+                gr.InterpolationMode = InterpolationMode.High;
+                gr.Transform = rotateAtCenter;
+                int x = (width - bm.Width) / 2;
+                int y = (height - bm.Height) / 2;
+                gr.DrawImage(bm, new Rectangle(x, y, bm.Width, bm.Height));
+            }
+
+            return result;
+        }
+
+        public static void GetBounds(IEnumerable<PointF> points, out float xmin, out float xmax, out float ymin, out float ymax) {
+            IEnumerable<float> x = points.Select(p => p.X);
+            IEnumerable<float> y = points.Select(p => p.Y);
+
+            xmin = x.Min();
+            xmax = x.Max();
+            ymin = y.Min();
+            ymax = y.Max();
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using NL.Extensions;
 using System;
 using System.IO;
+using System.Text;
 
 namespace NL.Utils {
     
@@ -14,9 +15,25 @@ namespace NL.Utils {
         ///     The filepath to format.
         /// </param>
         public static string AsPath(this string path) {
-            return path
+            StringBuilder validPath = new();
+            path = path
                 .Trim()
                 .Replace('/', '\\');
+            bool isUNC = path.StartsWith(@"\\");
+            bool hasRoot = Path.IsPathRooted(path);
+
+            // Add '.' before relative paths, except for UNC-formatted strings.
+            if(path.StartsWith(@"\")) {
+                if(!isUNC) {
+                    validPath.Append('.');
+                }
+            }else if(!(hasRoot || path.StartsWith(@"."))) {
+                validPath.Append(@".\");
+            }
+
+            validPath.Append(path);
+
+            return validPath.ToString();
         }
 
         /// <summary>
@@ -63,10 +80,13 @@ namespace NL.Utils {
         ///     otherwise.
         /// </returns>
         public static string GetExtension(string path) {
-            int startIndex = path.LastIndexOf('.') + 1;
+            string filename = GetFilename(path, true);
+            int startIndex = filename
+                .LastIndexOf('.') + 1;
+            
             return startIndex <= 0
                 ? string.Empty
-                : path[startIndex..];
+                : filename[startIndex..];
         }
 
         /// <summary>
@@ -80,15 +100,17 @@ namespace NL.Utils {
         /// </returns>
         public static string GetDirectory(string path) {
             int endIndex = path.LastIndexOf('\\') + 1;
-            string directory;
-            if(endIndex == 0) {
-                directory = string.Empty;
-            } else {
-                directory = endIndex == path.Length - 1
-                    ? path
-                    : path[..endIndex];
-            }
+            string directory = endIndex == 0 || endIndex == path.Length - 1
+                ? string.Empty
+                : path[..endIndex];
+            
             return directory;
+        }
+
+        public static void Create(string filepath, bool replaceExisting) {
+            if(replaceExisting || !File.Exists(filepath)) {
+                File.Create(filepath).Close();
+            }
         }
 
     }
