@@ -4,6 +4,10 @@ using System.IO;
 using System.Text;
 
 namespace NL.Production {
+    /// <summary>
+    ///     Access point to files, folders and settings shared
+    ///     between programs.
+    /// </summary>
     public static partial class SharedFolder {
 
         private const string SHARED_SETTINGS_FILENAME = "CheapHouse_Config.json";
@@ -18,7 +22,7 @@ namespace NL.Production {
         /// <summary>
         ///     The configuration shared between programs.
         /// </summary>
-        public static readonly SharedConfiguration Configuration;
+        public static SharedConfiguration Configuration { get; private set; }
 
         static SharedFolder() {
             // Initialize filepaths and create missing folders & files
@@ -27,7 +31,13 @@ namespace NL.Production {
 
             Directory.CreateDirectory(SharedSettingsFolder);
             SharedSettingsFilePath = Path.Combine(SharedSettingsFolder, SHARED_SETTINGS_FILENAME);
-            if(!Json.TryDeserialize(SharedSettingsFilePath, out Configuration)) {
+            ReadConfiguration();
+        }
+
+        internal static void ReadConfiguration() {
+            if(Json.TryDeserialize(SharedSettingsFilePath, out SharedConfiguration config)) {
+                Configuration = config;
+            } else {
                 Configuration = new SharedConfiguration();
                 Json.Serialize(Configuration, SharedSettingsFilePath);
             }

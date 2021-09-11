@@ -32,5 +32,12 @@ namespace NL.Extensions {
         public static bool IsNullOrEmpty(this StringBuilder str) {
             return str is null || str.Length == 0;
         }
+
+        public static StringBuilder Append(this StringBuilder sb, string s, int times) {
+            for(int i = 0; i < times; i++) {
+                sb.Append(s);
+            }
+            return sb;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NL.Extensions {
@@ -80,6 +81,17 @@ namespace NL.Extensions {
             return invertedCollection;
         }
 
+        public static int FindIndexWhere<T>(this IEnumerable<T> collection, Func<T, bool> predicate) {
+            int index = 0;
+            foreach(T item in collection) {
+                if(predicate.Invoke(item)) {
+                    return index;
+                }
+                index++;
+            }
+
+            return -1;
+        }
     }
 
 }

@@ -32,12 +32,13 @@ namespace NL.Extensions {
         ///     is removed.
         /// </summary>
         /// <returns>
-        /// The original <see cref="string"/> if its length is less than <paramref name="maxLength"/>,
+        ///     The original <see cref="string"/> if its length is less than <paramref name="maxLength"/>,
         ///     otherwise a new <see cref="string"/> containing the first <paramref name="maxLength"/>
         ///     characters of the original, minus the last 3 characters which are replaced with
-        ///     "...".
+        ///     "...". If the <paramref name="maxLength"/> is less than 4, the <see cref="string"/>
+        ///     "..." is returned instead.
         /// </returns>
-        /// <inheritdoc cref="Truncate(string, uint)"/>
+        /// <inheritdoc cref="Truncate(string, int)"/>
         public static string TruncateWithSuspension(this string str, int maxLength) {
             if(maxLength is < 3 and >= 0)
                 return "...";
@@ -383,6 +384,10 @@ namespace NL.Extensions {
                 .Select(n => (float)n)
                 .ToArray();
             return res;
+        }
+
+        public static bool IsWhiteSpace(this string str) {
+            return !str.IsNullOrDefault() && str.IsEmpty();
         }
     }
 }
