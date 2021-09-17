@@ -58,9 +58,26 @@ namespace NL.Extensions {
         ///     and with all WhiteSpace characters removed.
         /// </returns>
         public static string[] SplitBySpaces(this string str) {
-            return Regex.Split(str, @"\s+")
-                .RemoveDefaults()
-                .ToArray();
+            // Avoided using a simple regex for a performance boost
+            var words = Enumerable.Empty<string>();
+            StringBuilder word = new();
+            
+            foreach(char c in str) {
+                if(char.IsWhiteSpace(c)) {
+                    if(word.Length != 0) {
+                        words = words.Append(word.ToString());
+                        word.Clear();
+                    }
+                }else {
+                    word.Append(c);
+                }
+            }
+            if(word.Length != 0) {
+                words.Append(word.ToString());
+                word.Clear();
+            }
+
+            return words.ToArray();
         }
 
         /// <summary>
@@ -386,8 +403,79 @@ namespace NL.Extensions {
             return res;
         }
 
+        /// <summary>
+        ///     Checks whether the string is filled with whitespace-characters only.
+        /// </summary>
+        /// <param name="str">
+        ///     The <see langword="string"/> to check.
+        /// </param>
+        /// <returns>
+        ///     <see langword="false"/> if the <paramref name="str"/> is <see langword="null"/>,
+        ///     empty, or contains any non-whitespace character. <see langword="true"/> otherwise.
+        /// </returns>
         public static bool IsWhiteSpace(this string str) {
-            return !str.IsNullOrDefault() && str.IsEmpty();
+            if(str.IsNullOrDefault()) {
+                return false;
+			}else {
+                foreach(char c in str) {
+                    if(!char.IsWhiteSpace(c)) {
+                        return false;
+					}
+				}
+                return true;
+			}
         }
+
+        /// <summary>
+        ///     Split the <see langword="string"/> in 2 parts, where the first 
+        ///     takes the first <paramref name="index"/> <see langword="char"/>s, 
+        ///     while the second contains the remainder.
+        /// </summary>
+        /// <param name="str">
+        ///     The <see langword="string"/> to split.
+        /// </param>
+        /// <param name="index">
+        ///     The length of the first <see langword="string"/>.
+        /// </param>
+        /// <returns>
+        ///     A 2-items long <see langword="string[]"/> containing the 2 aforementioned
+        ///     parts of the <paramref name="str"/>.
+        /// </returns>
+        public static string[] SplitAt(this string str, int index) {
+            return new string[] {
+                str[..index], str[index..]
+            };
+		}
+
+        /// <summary>
+        ///     Uppercase the first letter found from the start of the <see langword="string"/>.
+        /// </summary>
+        /// <returns>
+        ///     A new <see langword="string"/> where the first letter from the start is turned to uppercase.
+        /// </returns>
+        public static string UppercaseFirstLetter(this string str) {
+            if(str.IsEmpty()) {
+                return str;
+            }
+
+            for(int i = 0; i < str.Length; i++) {
+                if(char.IsLetter(str[i])) {
+                    if(char.IsUpper(str[i])) {
+                        // Already uppercase - no changes required
+                        return str;
+					}
+
+                    string[] parts = str.SplitAt(i);
+                    // parts[1] will never be 0 chars long - hence no check is required
+                    if(parts[1].Length == 1) {  //Would throw IndexOutOfRangeException if handled normally
+                        return $"{parts[0]}{parts[1].ToUpper()}";
+                    }else {
+                        parts[1] = $"{parts[1][0].ToUpper()}{parts[1][1..]}";
+                        return $"{parts[0]}{parts[1]}";
+                    }
+                }
+			}
+            return str; // No letters found
+		}
     }
 }
