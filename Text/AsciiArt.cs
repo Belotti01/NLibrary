@@ -49,7 +49,7 @@ namespace NL.Text {
             
             string[] asciiChar;
             int charNumber = -1;
-            int currentCharWidth, charWidth, startRow, i;
+            int currentCharWidth, maxCharWidth, startRow, i;
 
             // Save ASCII font in structure
             foreach(char c in Characters) {
@@ -60,13 +60,13 @@ namespace NL.Text {
 
                 asciiChar = new string[charHeight];
                 startRow = (charHeight + 1) * charNumber;
-                charWidth = 0;
+                maxCharWidth = 0;
                 if(hMode is AsciiHorizontalMode.Trimmed or AsciiHorizontalMode.Spaced) {
                     // Calculate the width of the next char
                     for(i = startRow; i < startRow + charHeight; i++) {
                         currentCharWidth = fontFileLines[i].TrimEnd().Length;
-                        if(currentCharWidth > charWidth) {
-                            charWidth = currentCharWidth;
+                        if(currentCharWidth > maxCharWidth) {
+                            maxCharWidth = currentCharWidth;
                         }
                     }
                 }
@@ -81,13 +81,13 @@ namespace NL.Text {
                     case AsciiHorizontalMode.Trimmed:
                         // Trim all whitespace between characters
                         for(i = startRow; i < startRow + charHeight; i++) {
-                            asciiChar[i - startRow] = fontFileLines[i][..(Math.Min(charWidth, fontFileLines[i].Length))];
+                            asciiChar[i - startRow] = fontFileLines[i][..(Math.Min(maxCharWidth, fontFileLines[i].Length))];
                         }
                         break;
                     case AsciiHorizontalMode.Spaced:
                         // Leave exactly 1 whitespace between each character
                         for(i = startRow; i < startRow + charHeight; i++) {
-                            asciiChar[i - startRow] = $"{fontFileLines[i][..(Math.Min(charWidth, fontFileLines[i].Length))]} ";
+                            asciiChar[i - startRow] = $"{fontFileLines[i][..(Math.Min(maxCharWidth, fontFileLines[i].Length))]} ";
                         }
                         break;
                 }
