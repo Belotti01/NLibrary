@@ -67,14 +67,23 @@ namespace NL.Database.MongoDB {
             );
         }
 
+        /// <summary>
+        ///     Update all properties of this <see cref="Schema{T}"/> object on 
+        ///     the database.
+        /// </summary>
         public void UpdateAll() {
             IEnumerable<PropertyInfo> memberData = typeof(T).GetProperties()
                 .Where(p => p.CustomAttributes
                     .Any(a => a.AttributeType == typeof(BsonElementAttribute))
                 );
+            // To minimize traffic, get the last DB state of this object and
+            // only send update queries for properties with different values
+            Schema<T> dbValues = GetOneOrDefault(x => x.Id == Id);
+            IEnumerable<PropertyInfo> toUpdate = memberData
+                .Where(x => x.GetValue(dbValues).Equals(x.GetValue(this)));
 
-            foreach(PropertyInfo a in memberData) {
-                Update(a.Name, a.GetValue(this));
+            foreach(PropertyInfo property in toUpdate) {
+                Update(property.Name, property.GetValue(this));
             }
         }
 

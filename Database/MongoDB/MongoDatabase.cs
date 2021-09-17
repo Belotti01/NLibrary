@@ -83,10 +83,10 @@ namespace NL.Database.MongoDB {
 
         public void Dispose() {
             _collections.Clear();
-            _collections = default;
-            _client = default;
-            _db = default;
-            _databaseName = default;
+            _collections = null;
+            _client = null;
+            _db = null;
+            _databaseName = null;
         }
 
         public object Clone() {
@@ -96,7 +96,7 @@ namespace NL.Database.MongoDB {
         }
 
         /// <summary>
-        ///     Strongly-typed versione of the <see cref="Clone"/> method.
+        ///     Strongly-typed version of the <see cref="Clone"/> method.
         /// </summary>
         /// <returns>
         ///     An exact copy of this <see cref="MongoDatabase"/>.
