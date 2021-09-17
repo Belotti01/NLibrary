@@ -4,23 +4,23 @@ namespace NL.Prompt {
 
     public static class Output {
 
-        public static void Write(string text) {
+        public static void Write(object text) {
             Console.ResetColor();
             Console.Write(text);
         }
 
-        public static void WriteLine(string text) {
+        public static void WriteLine(object text) {
             Console.ResetColor();
             Console.WriteLine(text);
         }
 
-        public static void Write(string text, ConsoleColor color) {
+        public static void Write(object text, ConsoleColor color) {
             Console.ForegroundColor = color;
             Console.Write(text);
             Console.ResetColor();
         }
 
-        public static void WriteLine(string text, ConsoleColor color) {
+        public static void WriteLine(object text, ConsoleColor color) {
             Console.ForegroundColor = color;
             Console.WriteLine(text);
             Console.ResetColor();
