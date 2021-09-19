@@ -45,7 +45,7 @@ namespace NL.Text {
             string[] fontFileLines = ReadFontFile(font);
 
             Dictionary<char, string[]> asciiCharacters = new();
-            int charHeight = fontFileLines.FindIndexWhere(x => x.IsWhiteSpace());
+            int charHeight = fontFileLines.FirstIndexWhere(x => x.IsWhiteSpace());
             
             string[] asciiChar;
             int charNumber = -1;

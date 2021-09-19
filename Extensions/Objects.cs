@@ -73,6 +73,10 @@ namespace NL.Extensions {
         /// </returns>
         public static bool IsNullOrDefault<T>(this T item)
             => EqualityComparer<T>.Default.Equals(item, default);
+
+        /// <inheritdoc cref="Enumerable.Contains{TSource}(IEnumerable{TSource}, TSource)"/>
+        public static bool In<T>(this T item, params T[] items)
+            => items.Contains(item);
     }
 
 }

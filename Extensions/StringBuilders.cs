@@ -15,8 +15,8 @@ namespace NL.Extensions {
         ///     contains no characters or whitespace characters only;
         ///     <see langword="false"/> otherwise.
         /// </returns>
-        public static bool IsEmptyOrWhiteSpace(this StringBuilder str) {
-            return str is null || str.ToString().IsEmpty();
+        public static bool IsEmptyOrWhiteSpace(this StringBuilder sb) {
+            return sb is null || sb.ToString().IsEmpty();
         }
 
         /// <summary>
@@ -29,8 +29,8 @@ namespace NL.Extensions {
         ///     contains no characters or whitespace characters only;
         ///     <see langword="false"/> otherwise.
         /// </returns>
-        public static bool IsNullOrEmpty(this StringBuilder str) {
-            return str is null || str.Length == 0;
+        public static bool IsNullOrEmpty(this StringBuilder sb) {
+            return sb is null || sb.Length == 0;
         }
 
         public static StringBuilder Append(this StringBuilder sb, string s, int times) {

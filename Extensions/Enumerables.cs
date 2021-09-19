@@ -81,16 +81,27 @@ namespace NL.Extensions {
             return invertedCollection;
         }
 
-        public static int FindIndexWhere<T>(this IEnumerable<T> collection, Func<T, bool> predicate) {
-            int index = 0;
+        public static int FirstIndexWhere<T>(this IEnumerable<T> collection, Func<T, bool> predicate) {
+            int index = -1;
             foreach(T item in collection) {
+                index++;
                 if(predicate.Invoke(item)) {
                     return index;
                 }
-                index++;
             }
-
             return -1;
+        }
+
+        public static int[] IndexesWhere<T>(this IEnumerable<T> collection, Func<T, bool> predicate) {
+            int index = -1;
+            IEnumerable<int> indexes = Enumerable.Empty<int>();
+            foreach(T item in collection) {
+                index++;
+                if(predicate.Invoke(item)) {
+                    indexes.Append(index);
+                }
+            }
+            return indexes.ToArray();
         }
     }
 
