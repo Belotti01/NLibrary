@@ -1,28 +1,49 @@
-﻿using System;
+﻿using NL.Utils;
+using System;
 
 namespace NL.Prompt {
 
     public static class Output {
+        private static int _indentation = 0;
+        /// <summary> The indentation level of the outputted text. </summary>
+        public static int Indentation { 
+            get => _indentation; 
+            set => _indentation = Math.Max(value, 0); 
+        }
+
+        private static string _indentationString = "\t";
+        /// <summary> 
+        ///     The string to prepend <see cref="Indentation"/> times to the output text.
+        /// </summary>
+        public static string IndentationString { 
+            get => _indentationString; 
+            set => _indentationString = value ?? string.Empty; }
+
+        private static string Indent(object text) {
+            return _indentation == 0 
+                ? text.ToString()
+                : $"{NLText.Repeated(_indentationString, _indentation)}{text}";
+		}
 
         public static void Write(object text) {
             Console.ResetColor();
-            Console.Write(text);
+            Console.Write(Indent(text));
         }
 
         public static void WriteLine(object text) {
             Console.ResetColor();
-            Console.WriteLine(text);
+            Console.WriteLine(Indent(text));
         }
 
         public static void Write(object text, ConsoleColor color) {
             Console.ForegroundColor = color;
-            Console.Write(text);
+            Console.Write(Indent(text));
             Console.ResetColor();
         }
 
         public static void WriteLine(object text, ConsoleColor color) {
             Console.ForegroundColor = color;
-            Console.WriteLine(text);
+            Console.WriteLine(Indent(text));
             Console.ResetColor();
         }
 
