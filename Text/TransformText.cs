@@ -61,13 +61,21 @@ namespace NL.Text {
     }
 
     public enum TextType {
+        /// <summary> 𝒶𝒷𝒸𝒹 𝒜𝐵𝒞𝒟 𝟣𝟤𝟥𝟦 </summary>
         Fancy,
+        /// <summary> 𝓪𝓫𝓬𝓭 𝓐𝓑𝓒𝓓 𝟣𝟤𝟥𝟦 </summary>
         FancyBold,
+        /// <summary> 𝔞𝔟𝔠𝔡 𝔄𝔅ℭ𝔇 </summary>
         Gothic,
+        /// <summary> 𝖆𝖇𝖈𝖉 𝕬𝕭𝕮𝕯 </summary>
         GothicBold,
+        /// <summary> 𝕒𝕓𝕔𝕕 𝔸𝔹ℂ𝔻 𝟙𝟚𝟛𝟜 </summary>
         Outline,
+        /// <summary> ⓐⓑⓒⓓ ⒶⒷⒸⒹ ①②③④ </summary>
         Circled,
+        /// <summary> ａｂｃｄ ＡＢＣＤ １２３４ </summary>
         FullWidth,
+        /// <summary> ɐqɔp ∀ꓭϽᗡ ⇂↊↋ߤ </summary>
         UpsideDown
     }
 }
