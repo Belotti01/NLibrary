@@ -202,6 +202,14 @@ namespace NL.Prompt {
 
             return input.ToLower();
         }
+
+        public static string[] ReadArgs(bool acceptEmpty = false) {
+            string[] args;
+            do {
+                args = ReadLine().SplitBySpaces();
+            } while(args.Length == 0 || acceptEmpty);
+            return args;
+        }
     }
 
 }

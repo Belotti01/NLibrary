@@ -112,6 +112,10 @@ namespace NL.Extensions {
         /// <inheritdoc cref="ToString(double, int)"/>
         public static string ToString(this float value, int decimals)
             => ((double)value).ToString(decimals);
+
+        /// <inheritdoc cref="ToString(double, int)"/>
+        public static string ToString(this decimal value, int decimals)
+            => ((double)value).ToString(decimals);
     }
 
 }

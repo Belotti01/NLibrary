@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace NL.Database.MongoDB {
 
+    /// <summary>
+    ///     Access point to a MongoDB schema which allows for read-write operations.
+    /// </summary>
     public abstract class Schema<T> : ReadOnlySchema<T> where T : Schema<T> {
 
         /// <summary>

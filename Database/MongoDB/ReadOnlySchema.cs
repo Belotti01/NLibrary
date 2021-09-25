@@ -8,6 +8,9 @@ using MongoDB.Bson;
 
 namespace NL.Database.MongoDB {
 
+    /// <summary>
+    ///     Access point to a MongoDB schema which only allows reading operations.
+    /// </summary>
     public abstract class ReadOnlySchema<T> where T : ReadOnlySchema<T> {
         /// <summary>
         ///     This document's unique ID.
