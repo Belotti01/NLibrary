@@ -103,6 +103,14 @@ namespace NL.Extensions {
             }
             return indexes.ToArray();
         }
+
+        public static IEnumerable<T> Swap<T>(this IEnumerable<T> collection, int index1, int index2) {
+            T[] items = collection.ToArray();
+            T item = items[index1];
+            items[index1] = items[index2];
+            items[index2] = item;
+            return items;
+        }
     }
 
 }

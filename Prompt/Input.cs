@@ -66,21 +66,22 @@ namespace NL.Prompt {
         public static T PickOne<T>(IEnumerable<T> options)
             => PickOne(options.ToArray());
 
-        /// <summary>
-            ///     Request user input until the entered value is valid
-            ///     and within the range <paramref name="min"/>
-            ///     to <paramref name="max"/> (both inclusive).
-            /// </summary>
-            /// <param name="min">
-            ///     The inclusive minimum input value.
-            /// </param>
-            /// <param name="max">
-            ///     The inclusive maximum input value.
-            /// </param>
-            /// <returns>
-            ///     The first valid value entered by the user.
-            /// </returns>
-        public static int ReadInt(int min = -int.MaxValue, int max = int.MaxValue) {
+        #region Read<T>
+		/// <summary>
+		///     Request user input until the entered value is valid
+		///     and within the range <paramref name="min"/>
+		///     to <paramref name="max"/> (both inclusive).
+		/// </summary>
+		/// <param name="min">
+		///     The inclusive minimum input value.
+		/// </param>
+		/// <param name="max">
+		///     The inclusive maximum input value.
+		/// </param>
+		/// <returns>
+		///     The first valid value entered by the user.
+		/// </returns>
+		public static int ReadInt(int min = -int.MaxValue, int max = int.MaxValue) {
             while (true) {
                 if (int.TryParse(Console.ReadLine(), out int value) && value >= min && value <= max) {
                     return value;
@@ -210,6 +211,7 @@ namespace NL.Prompt {
             } while(args.Length == 0 || acceptEmpty);
             return args;
         }
+#endregion
     }
 
 }

@@ -475,6 +475,10 @@ namespace NL.Extensions {
                 }
 			}
             return str; // No letters found
-		}
+        }
+
+        public static bool IsValidDate(this string str) {
+            return !str.IsEmpty() && DateTime.TryParse(str, out _);
+        }
     }
 }

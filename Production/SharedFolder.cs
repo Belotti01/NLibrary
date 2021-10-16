@@ -27,7 +27,7 @@ namespace NL.Production {
         static SharedFolder() {
             // Initialize filepaths and create missing folders & files
             string root = Path.GetPathRoot(Directory.GetCurrentDirectory());
-            SharedSettingsFolder = Path.Combine(root, "CheapHouse");
+            SharedSettingsFolder = Path.Combine(root, "Program Files", "CheapHouse");
 
             Directory.CreateDirectory(SharedSettingsFolder);
             SharedSettingsFilePath = Path.Combine(SharedSettingsFolder, SHARED_SETTINGS_FILENAME);

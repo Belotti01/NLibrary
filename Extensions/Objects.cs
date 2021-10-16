@@ -75,8 +75,8 @@ namespace NL.Extensions {
             => EqualityComparer<T>.Default.Equals(item, default);
 
         /// <inheritdoc cref="Enumerable.Contains{TSource}(IEnumerable{TSource}, TSource)"/>
-        public static bool In<T>(this T item, params T[] items)
-            => items.Contains(item);
+        public static bool In<T>(this T value, params T[] source)
+            => source.Contains(value);
     }
 
 }

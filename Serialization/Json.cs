@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NL.Exceptions;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace NL.Serialization {
 
