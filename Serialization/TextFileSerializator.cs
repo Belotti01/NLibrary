@@ -8,7 +8,7 @@ namespace NL.Serialization {
     ///     Collection of methods used to safely access files as text files, without risking
     ///     deadlocks or <see cref="IOException"/>s.
     /// </summary>
-    public static class TextFile {
+    public static class TextFileSerializator {
         internal const int BASE_TIMEOUT = 3000;
 
         /// <returns>An array of <see cref="string"/> containing all the lines of the file.</returns>

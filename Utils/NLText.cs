@@ -50,22 +50,5 @@ namespace NL.Utils {
             return sb.ToString();
         }
 
-        /// <summary>
-        ///     Get the rounded width of the <paramref name="str"/> relative to the width
-        ///     of a single whitespace.
-        /// </summary>
-        /// <param name="str">
-        ///     The <see langword="string"/> to measure.
-        /// </param>
-        /// <returns>
-        ///     The width of the <paramref name="str"/>, divided by the width of a single
-        ///     whitespace.
-        /// </returns>
-        public static int GetVisualWidth(string str) {
-            using Font f = new("Microsoft Sans Serif", 14, FontStyle.Regular);
-            using Graphics g = Graphics.FromHwnd(IntPtr.Zero);
-            return (g.MeasureString(str, f).Width / g.MeasureString(" ", f).Width).Rounded();
-        }
-
     }
 }

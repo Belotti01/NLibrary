@@ -1,16 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NaturalSort.Extension;
 
 namespace NL.Extensions {
 	public static class Sorting {
 
-		#region LinqParallelSort
+        #region LinqParallelSort
 
-		public static IEnumerable<T> ParallelSort<T, TKey>(this IEnumerable<T> collection, Func<T, TKey> keySelector) {
+        public static IEnumerable<T> ParallelSort<T, TKey>(this IEnumerable<T> collection, Func<T, TKey> keySelector) {
             return collection
                 .AsParallel()
                 .OrderBy(keySelector)
+                .AsEnumerable();
+        }
+
+        public static IEnumerable<T> ParallelSort<T, TKey>(this IEnumerable<T> collection, Func<T, TKey> keySelector, IComparer<TKey> comparer) {
+            return collection
+                .AsParallel()
+                .OrderBy(keySelector, comparer)
+                .AsEnumerable();
+        }
+
+        public static IEnumerable<T> ParallelSort<T>(this IEnumerable<T> collection, Comparer<T> comparer) {
+            return collection
+                .AsParallel()
+                .OrderBy(x => x, comparer)
                 .AsEnumerable();
         }
 
@@ -21,12 +36,35 @@ namespace NL.Extensions {
                 .AsEnumerable();
         }
 
-		#endregion
+        #endregion
+
+        #region NaturalSort
+
+        public static IEnumerable<string> NaturalSort(this IEnumerable<string> collection, StringComparison comparer) {
+            IComparer<string> c = new NaturalSortComparer(comparer);
+            return collection.ParallelSort(c as Comparer<string>);
+        }
+
+        public static IEnumerable<string> NaturalSort(this IEnumerable<string> collection, bool ignoreCase = false) {
+            return ignoreCase
+                ? collection.NaturalSort(StringComparison.OrdinalIgnoreCase)
+                : collection.NaturalSort(StringComparison.Ordinal);
+        }
+
+        public static IEnumerable<T> NaturalSort<T>(this IEnumerable<T> collection, Func<T, string> keySelector, bool ignoreCase = false) {
+            IComparer<string> comparer = (ignoreCase
+                ? StringComparer.OrdinalIgnoreCase
+                : StringComparer.Ordinal
+            ).WithNaturalSort();
+            return collection.ParallelSort(keySelector, comparer);
+        }
+
+        #endregion
 
 
-		#region BubbleSort
+        #region BubbleSort
 
-		public static IEnumerable<T> BubbleSort<T>(this IEnumerable<T> collection) where T : IComparable<T>
+        public static IEnumerable<T> BubbleSort<T>(this IEnumerable<T> collection) where T : IComparable<T>
             => collection.BubbleSort(Comparer<T>.Default);
 
         public static IEnumerable<T> BubbleSort<T>(this IEnumerable<T> collection, IComparer<T> comparer) {
@@ -101,6 +139,6 @@ namespace NL.Extensions {
             return items;
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -17,7 +17,7 @@ namespace NL.Production.Shared {
         ///     assigned values.
         /// </summary>
         public void Save() {
-            Json.Serialize(this, SharedSettingsFilePath, 10000);
+            JsonSerializator.Serialize(this, SharedSettingsFilePath);
         }
 
         /// <summary>

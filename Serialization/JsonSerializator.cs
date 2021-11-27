@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MyNameSpace.Serialization;
+using Newtonsoft.Json;
 using NL.Exceptions;
 using System.IO;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace NL.Serialization {
     /// <summary>
     ///		JSON Serialization and Deserialization methods.
     /// </summary>
-    public static class Json {
+    public class JsonSerializator : ISerializator {
 
         /// <summary>
         ///		Write an <see langword="object"/> to a .json file, or overwrite it if
@@ -25,9 +26,9 @@ namespace NL.Serialization {
         ///		<see langword="object"/>.
         /// </param>
         /// <exception cref="FileAccessTimeoutException"/>
-        public static void Serialize(object obj, string filepath, int timeout = TextFile.BASE_TIMEOUT) {
+        public static void Serialize(object obj, string filepath) {
             string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-            TextFile.Write(filepath, json, timeout);
+            TextFileSerializator.Write(filepath, json);
         }
 
         /// <summary>
@@ -42,10 +43,10 @@ namespace NL.Serialization {
         ///		from the json file if it exists, <see langword="default"/> otherwise.
         /// </returns>
         /// <inheritdoc cref="Serialize(object, string, int)"/>
-        public static T Deserialize<T>(string filepath, int timeout = TextFile.BASE_TIMEOUT) {
+        public static T Deserialize<T>(string filepath) {
             if (!File.Exists(filepath))
                 return default;
-            string json = TextFile.Read(filepath, timeout);
+            string json = TextFileSerializator.Read(filepath);
             return JsonConvert.DeserializeObject<T>(json);
         }
 
@@ -59,10 +60,9 @@ namespace NL.Serialization {
                 obj = default;
                 return false;
             }
-            string json = TextFile.Read(filepath);
+            string json = TextFileSerializator.Read(filepath);
             obj = JsonConvert.DeserializeObject<T>(json);
             return true;
         }
-
     }
 }

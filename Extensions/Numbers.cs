@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NL.Utils;
+using System;
 using System.Text;
 
 namespace NL.Extensions {
@@ -37,49 +38,9 @@ namespace NL.Extensions {
             => (int)Math.Ceiling(value);
         #endregion
 
-        /// <summary>
-        ///     Clamp the number in between a <paramref name="min"/> and a
-        ///     <paramref name="max"/> value.
-        /// </summary>
-        /// <param name="value">
-        ///     The base value.
-        /// </param>
-        /// <param name="min">
-        ///     The minimum value returned.
-        /// </param>
-        /// <param name="max">
-        ///     The maximum value returned.
-        /// </param>
-        /// <returns>
-        ///     <paramref name="min"/> if the <paramref name="value"/> is
-        ///     smaller than <paramref name="min"/>; <paramref name="max"/>
-        ///     if the <paramref name="value"/> is bigger than <paramref name="max"/>;
-        ///     <paramref name="value"/> otherwise.
-        /// </returns>
-        public static int Clamp(this int value, int min, int max) {
-            return value < min
-                ? min
-                : value > max
-                    ? max
-                    : value;
-        }
-
-        /// <inheritdoc cref="Clamp(int, int, int)"/>
-        public static float Clamp(this float value, float min, float max) {
-            return value < min
-                ? min
-                : value > max
-                    ? max
-                    : value;
-        }
-
-        /// <inheritdoc cref="Clamp(int, int, int)"/>
-        public static double Clamp(this double value, double min, double max) {
-            return value < min
-                ? min
-                : value > max
-                    ? max
-                    : value;
+        /// <inheritdoc cref="INumber{TSelf}.Clamp(TSelf, TSelf, TSelf)"/>
+        public static T Clamp<T>(this T value, T min, T max) where T : INumber<T> {
+            return T.Clamp(value, min, max);
         }
 
         /// <summary>
@@ -92,10 +53,15 @@ namespace NL.Extensions {
         /// <returns>
         ///     A <see cref="string"/> format of the value with <paramref name="decimals"/> decimal places.
         /// </returns>
-        public static string ToString(this double value, int decimals) {
+        public static string ToString<T>(this T value, int decimals) where T : INumber<T> {
             string[] parts = value.ToString().Split('.');
             StringBuilder ret = new(parts[0]);
             if (decimals == 0) {
+                return ret.ToString();
+            }
+
+            if (parts.Length == 1) {
+                ret.Append(NLText.Repeated('0', decimals));
                 return ret.ToString();
             }
 
@@ -108,14 +74,6 @@ namespace NL.Extensions {
                     .Append('0', decimals - parts[1].Length)
                     .ToString();
         }
-
-        /// <inheritdoc cref="ToString(double, int)"/>
-        public static string ToString(this float value, int decimals)
-            => ((double)value).ToString(decimals);
-
-        /// <inheritdoc cref="ToString(double, int)"/>
-        public static string ToString(this decimal value, int decimals)
-            => ((double)value).ToString(decimals);
     }
 
 }

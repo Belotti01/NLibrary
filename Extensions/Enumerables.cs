@@ -111,6 +111,18 @@ namespace NL.Extensions {
             items[index2] = item;
             return items;
         }
+
+        public static Dictionary<T, int> CountDinstinct<T>(this IEnumerable<T> collection, Func<T, bool> predicate = default) {
+            Dictionary<T, int> counts = new();
+            int count;
+
+            foreach (T item in collection.Distinct()) {
+                count = collection.Count(predicate ?? new(x => x.Equals(item)));
+                counts.Add(item, count);
+            }
+
+            return counts;
+        }
     }
 
 }

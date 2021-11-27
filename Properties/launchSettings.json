@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NL": {
+      "commandName": "Project",
+      "sqlDebugging": false
+    }
+  }
+}

@@ -12,7 +12,9 @@ namespace NL.Utils {
                 UseShellExecute = true,
                 WindowStyle = showWindow
                     ? ProcessWindowStyle.Normal
-                    : ProcessWindowStyle.Hidden
+                    : ProcessWindowStyle.Hidden,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true
             };
 
             return Process.Start(processInfo);

@@ -35,11 +35,11 @@ namespace NL.Production {
         }
 
         internal static void ReadConfiguration() {
-            if(Json.TryDeserialize(SharedSettingsFilePath, out SharedConfiguration config)) {
+            if(JsonSerializator.TryDeserialize(SharedSettingsFilePath, out SharedConfiguration config)) {
                 Configuration = config;
             } else {
                 Configuration = new SharedConfiguration();
-                Json.Serialize(Configuration, SharedSettingsFilePath);
+                JsonSerializator.Serialize(Configuration, SharedSettingsFilePath);
             }
         }
     }

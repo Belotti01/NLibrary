@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+	<TargetFramework>net6.0</TargetFramework> 
+    <RootNamespace>MyNameSpace</RootNamespace> 
     <LangVersion>latestMajor</LangVersion>
     <OutputType>Library</OutputType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -11,6 +12,7 @@
     <Product>$(AssemblyName)</Product>
     <NeutralLanguage>en</NeutralLanguage>
     <Platforms>AnyCPU;x64</Platforms>
+	<EnablePreviewFeatures>True</EnablePreviewFeatures>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -36,10 +38,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoDB.Bson" Version="2.13.0-beta1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.13.0-beta1" />
+    <PackageReference Include="MongoDB.Bson" Version="2.14.0-beta1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.14.0-beta1" />
+    <PackageReference Include="MySql.Data" Version="8.0.27" />
+    <PackageReference Include="NaturalSort.Extension" Version="3.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="System.Runtime.Experimental" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

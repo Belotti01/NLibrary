@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 
 namespace NL.Text {
-    public static class AsciiArt {
+    public static class AsciiArtConverter {
         private static readonly char[] Characters;
         private static readonly string AsciiFontsFolder;
 
-        static AsciiArt() {
+        static AsciiArtConverter() {
             Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
-            string libraryFolder = Path.GetDirectoryName(typeof(AsciiArt).Assembly.Location);
+            string libraryFolder = Path.GetDirectoryName(typeof(AsciiArtConverter).Assembly.Location);
             AsciiFontsFolder = Path.Combine(libraryFolder, "Text", "AsciiArtFonts");
         }
 

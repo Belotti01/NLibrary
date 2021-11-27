@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -49,9 +50,10 @@ namespace NL.Extensions {
         ///     call to <see cref="object.ToString"/> on the type <typeparamref name="T"/>.
         /// </returns>
         public static string[] ToStringArray<T>(this IEnumerable<T> values) {
-            return values
-                .Select(v => v.ToString())
-                .ToArray();
+            return values?
+                .Select(v => v?.ToString() ?? "")
+                .ToArray()
+                ?? Array.Empty<string>();
         }
 
         /// <summary>
@@ -71,8 +73,10 @@ namespace NL.Extensions {
         ///         </item>
         ///     </list>
         /// </returns>
-        public static bool IsNullOrDefault<T>(this T item)
-            => EqualityComparer<T>.Default.Equals(item, default);
+        public static bool IsNullOrDefault<T>(this T item) {
+            return (item is null && default(T) is null)
+                || EqualityComparer<T>.Default.Equals(item, default!);
+        }
 
         /// <inheritdoc cref="Enumerable.Contains{TSource}(IEnumerable{TSource}, TSource)"/>
         public static bool In<T>(this T value, params T[] source)
