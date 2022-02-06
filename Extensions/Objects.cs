@@ -81,6 +81,9 @@ namespace NL.Extensions {
         /// <inheritdoc cref="Enumerable.Contains{TSource}(IEnumerable{TSource}, TSource)"/>
         public static bool In<T>(this T value, params T[] source)
             => source.Contains(value);
+
+        public static bool ContainsAny<T>(this IEnumerable<T> value, params T[] items)
+            => items.Any(x => value.Contains(x));
     }
 
 }

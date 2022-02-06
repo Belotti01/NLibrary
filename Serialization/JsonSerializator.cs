@@ -13,17 +13,13 @@ namespace NL.Serialization {
 
         /// <summary>
         ///		Write an <see langword="object"/> to a .json file, or overwrite it if
-        ///		it already exists, if the file is accessible within <paramref name="timeout"/>ms.
+        ///		it already exists, if the file is accessible.
         /// </summary>
         /// <param name="obj">
         ///		The <see langword="object"/> to serialize.
         /// </param>
         /// <param name="filepath">
         ///		The absolute or relative path and filename of the .json file.
-        /// </param>
-        /// <param name="timeout">
-        ///		The maximum time (in milliseconds) it can take to serialize the
-        ///		<see langword="object"/>.
         /// </param>
         /// <exception cref="FileAccessTimeoutException"/>
         public static void Serialize(object obj, string filepath) {
@@ -42,7 +38,7 @@ namespace NL.Serialization {
         ///		The <see langword="object"/> of type <typeparamref name="T"/> retrieved
         ///		from the json file if it exists, <see langword="default"/> otherwise.
         /// </returns>
-        /// <inheritdoc cref="Serialize(object, string, int)"/>
+        /// <inheritdoc cref="Serialize(object, string)"/>
         public static T Deserialize<T>(string filepath) {
             if (!File.Exists(filepath))
                 return default;
@@ -54,7 +50,7 @@ namespace NL.Serialization {
         ///		<see langword="true"/> if the file exists, <see langword="false"/>
         ///		otherwise.
         /// </returns>
-        /// <inheritdoc cref="Deserialize{T}(string, int)"/>
+        /// <inheritdoc cref="Deserialize{T}(string)"/>
         public static bool TryDeserialize<T>(string filepath, out T obj) {
             if (!File.Exists(filepath)) {
                 obj = default;
