@@ -491,5 +491,12 @@ namespace NL.Extensions {
         public static bool IsValidDate([MaybeNullWhen(false)] this string? str) {
             return !str.IsEmpty() && DateTime.TryParse(str, out _);
         }
+
+        public static string Wrapped(this string? str, string wrapper, bool spaced = true) {
+            str ??= string.Empty;
+            return spaced
+                ? $"{wrapper} {str} {wrapper}"
+                : $"{wrapper}{str}{wrapper}";
+        }
     }
 }

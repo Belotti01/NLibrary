@@ -1,15 +1,14 @@
-﻿using MyNameSpace.Serialization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NL.Exceptions;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace NL.Serialization {
 
-    /// <summary>
-    ///		JSON Serialization and Deserialization methods.
-    /// </summary>
-    public class JsonSerializator : ISerializator {
+	/// <summary>
+	///		JSON Serialization and Deserialization methods.
+	/// </summary>
+	public class JsonSerializator : ISerializator {
 
         /// <summary>
         ///		Write an <see langword="object"/> to a .json file, or overwrite it if

@@ -5,15 +5,11 @@ namespace NL.Extensions {
 
     public static class Tasks {
 
-        /// <summary>
-        ///     Resolve a <see cref="Task"/> synchronously.
-        /// </summary>
-        public static void Resolve(this Task task)
-            => task.GetAwaiter().GetResult();
-
-        /// <inheritdoc cref="Resolve(Task)"/>
-        public static T Resolve<T>(this Task<T> task)
-            => task.GetAwaiter().GetResult();
+        /// <inheritdoc cref="Task.Wait()"/>
+        public static T Wait<T>(this Task<T> task) {
+            task.Wait();
+            return task.Result;
+		}
 
         /// <summary>
         ///     Ignore any <see cref="Exception"/> thrown by this <see cref="Task"/>.

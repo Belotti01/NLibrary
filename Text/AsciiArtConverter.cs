@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace NL.Text {
@@ -136,11 +137,15 @@ namespace NL.Text {
         }
 
         private static string[] ReadFontFile(AsciiFont font) {
-            string fontFile = Path.Combine(AsciiFontsFolder, $"{font}.txt");
-            string[] fontFileLines = File.ReadAllLines(fontFile)
+            return (font switch {
+                AsciiFont.Bloody => Ascii.Bloody,
+                AsciiFont.Poison => Ascii.Poison,
+                AsciiFont.Moscow => Ascii.Moscow,
+                AsciiFont.RowanCap => Ascii.RowanCap,
+                _ => string.Empty,
+            }).Split(Environment.NewLine)
                 .SkipWhile(x => x.IsWhiteSpace())
                 .ToArray();
-            return fontFileLines;
         }
     }
 
