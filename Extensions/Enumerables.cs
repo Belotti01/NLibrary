@@ -60,27 +60,6 @@ namespace NL.Extensions {
             return collection.Select(s => s is null ? s : s.Trim(trimChars));
         }
 
-        /// <summary>
-        ///     Invert the order of values inside the <see cref="IEnumerable{T}"/>.
-        /// </summary>
-        /// <returns>
-        ///     A copy of the <see cref="IEnumerable{T}"/> where the order of the
-        ///     values is backwards.
-        /// </returns>
-        public static IEnumerable<T> Inverted<T>(this IEnumerable<T> collection) {
-            long collectionSize = collection.LongCount();
-            T[] invertedCollection = collection.ToArray();
-
-            T temp;
-            for(long i = 0; i < collectionSize / 2; i++) {
-                temp = invertedCollection[i];
-                invertedCollection[i] = invertedCollection[collectionSize - i - 1];
-                invertedCollection[collectionSize - i - 1] = temp;
-            }
-
-            return invertedCollection;
-        }
-
         public static int FirstIndexWhere<T>(this IEnumerable<T> collection, Func<T, bool> predicate) {
             int index = -1;
             foreach(T item in collection) {
@@ -92,16 +71,15 @@ namespace NL.Extensions {
             return -1;
         }
 
-        public static int[] IndexesWhere<T>(this IEnumerable<T> collection, Func<T, bool> predicate) {
+        public static IEnumerable<int> IndexesWhere<T>(this IEnumerable<T> collection, Func<T, bool> predicate) {
             int index = -1;
-            IEnumerable<int> indexes = Enumerable.Empty<int>();
+
             foreach(T item in collection) {
                 index++;
                 if(predicate.Invoke(item)) {
-                    indexes.Append(index);
+                    yield return index;
                 }
             }
-            return indexes.ToArray();
         }
 
         public static IEnumerable<T> Swap<T>(this IEnumerable<T> collection, int index1, int index2) {

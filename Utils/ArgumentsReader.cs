@@ -56,8 +56,6 @@ namespace NL.Utils {
 		}
 
 		public bool HasArguments(string argument)
-			=> Arguments.ContainsKey(argument);
-
-	
+			=> Arguments.ContainsKey(argument);	
 	}
 }

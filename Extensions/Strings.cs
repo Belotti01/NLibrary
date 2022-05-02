@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using NL.Security.Encryption;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -186,6 +187,11 @@ namespace NL.Extensions {
         }
         #endregion
 
+
+        #region Encryption & Hashing
+        public static string ToSha512(this string str)
+            => Hashing.Sha512(str);
+        #endregion
 
 
         /// <summary>
