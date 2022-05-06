@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
@@ -42,10 +41,10 @@ namespace NL.Utils {
 
 			if(hasMainArgument) {
 				MainArgument = args[0];
-				args = args.Length > 1 
+				args = args.Length > 1
 					? args[1..]
 					: Array.Empty<string>();
-			}else {
+			} else {
 				MainArgument = string.Empty;
 			}
 
@@ -56,6 +55,6 @@ namespace NL.Utils {
 		}
 
 		public bool HasArguments(string argument)
-			=> Arguments.ContainsKey(argument);	
+			=> Arguments.ContainsKey(argument);
 	}
 }

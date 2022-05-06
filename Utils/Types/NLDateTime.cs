@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NL.Utils.Types {
+﻿namespace NL.Utils.Types {
 	internal struct NLDateTime {
 		#region Casts
 		public static implicit operator NLDateTime(DateTime value) => new(value);
