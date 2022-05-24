@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace NL.Database.MongoDB {
@@ -12,8 +13,8 @@ namespace NL.Database.MongoDB {
 		/// <summary>
 		/// The MongoDB collection containing the documents for the type <typeparamref name="T"/>.
 		/// </summary>
-		[BsonIgnore]
-		private static IMongoCollection<T> _collection;
+		[BsonIgnore, NotNull]
+		protected static IMongoCollection<T>? _collection;
 
 		/// <summary>
 		/// Attempts to create a new document in the Database.

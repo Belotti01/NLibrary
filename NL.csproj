@@ -12,6 +12,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Platforms>AnyCPU;x64</Platforms>
 	<EnablePreviewFeatures>True</EnablePreviewFeatures>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
