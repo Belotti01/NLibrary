@@ -3,7 +3,7 @@ using MongoDB.Driver;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace NL.Database.MongoDB {
+namespace NLCommon.Database.MongoDB {
 
 	/// <summary>
 	///     Access point to a MongoDB schema which allows for read-write operations.

@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace NL.Security.Encryption {
+namespace NLCommon.Security.Encryption {
 	public static class Hashing {
 		public static string Sha512(string text) {
 			var bytes = Encoding.UTF8.GetBytes(text);

@@ -1,4 +1,4 @@
-﻿namespace NL.Text {
+﻿namespace NLCommon.Text {
 	/// <summary>
 	///     Methods to modify the characters contained in a <see langword="string"/>.
 	/// </summary>

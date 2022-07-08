@@ -1,4 +1,4 @@
-﻿namespace NL.Utils {
+﻿namespace NLCommon.Utils {
 	public static class NLMath {
 
 		public static string ToBase(int n, int toBase) {

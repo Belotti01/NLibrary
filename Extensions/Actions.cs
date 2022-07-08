@@ -1,7 +1,7 @@
-﻿using NL.Exceptions;
+﻿using NLCommon.Exceptions;
 using System.Timers;
 
-namespace NL.Extensions {
+namespace NLCommon.Extensions {
 
 	public static class Actions {
 

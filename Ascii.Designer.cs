@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NL {
+namespace NLCommon {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NL {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NL.Ascii", typeof(Ascii).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NLCommon.Ascii", typeof(Ascii).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

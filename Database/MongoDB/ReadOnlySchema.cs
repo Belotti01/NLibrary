@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 
-namespace NL.Database.MongoDB {
+namespace NLCommon.Database.MongoDB {
 
 	/// <summary>
 	///     Access point to a MongoDB schema which only allows reading operations.

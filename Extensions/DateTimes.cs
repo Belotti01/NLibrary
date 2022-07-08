@@ -1,4 +1,4 @@
-﻿namespace NL.Extensions {
+﻿namespace NLCommon.Extensions {
 	public static class DateTimes {
 		public static TimeOnly GetTime(this DateTime dateTime)
 			=> TimeOnly.FromDateTime(dateTime);

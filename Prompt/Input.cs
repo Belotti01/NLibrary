@@ -1,6 +1,6 @@
-﻿using NL.Exceptions;
+﻿using NLCommon.Exceptions;
 
-namespace NL.Prompt {
+namespace NLCommon.Prompt {
 
 	/// <summary>
 	///     Methods to request console input from the user.

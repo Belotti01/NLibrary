@@ -1,4 +1,4 @@
-﻿namespace NL.Exceptions {
+﻿namespace NLCommon.Exceptions {
 
 	/// <summary>
 	///     <see cref="Exception"/> thrown when a parameter contains a value that is not 

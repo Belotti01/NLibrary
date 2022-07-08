@@ -1,6 +1,6 @@
 ﻿using NaturalSort.Extension;
 
-namespace NL.Extensions {
+namespace NLCommon.Extensions {
 	public static class Sorting {
 
 		#region LinqParallelSort

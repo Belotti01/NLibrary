@@ -1,7 +1,7 @@
 ﻿#nullable enable
 
 
-namespace NL.Extensions {
+namespace NLCommon.Extensions {
 	public static class StringBuilders {
 		/// <summary>
 		///     Check if the <see langword="string"/> built from the

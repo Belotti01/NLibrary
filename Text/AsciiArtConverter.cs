@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace NL.Text {
+namespace NLCommon.Text {
 	public static class AsciiArtConverter {
 		private static readonly char[] Characters;
 		private static readonly string AsciiFontsFolder;

@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using NL.Exceptions;
+using NLCommon.Exceptions;
 using System.IO;
 
-namespace NL.Serialization {
+namespace NLCommon.Serialization {
 
 	/// <summary>
 	///		JSON Serialization and Deserialization methods.

@@ -1,6 +1,6 @@
-﻿using NL.Utils;
+﻿using NLCommon.Utils;
 
-namespace NL.Extensions {
+namespace NLCommon.Extensions {
 
 	public static class Numbers {
 

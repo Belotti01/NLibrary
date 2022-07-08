@@ -1,4 +1,4 @@
-﻿namespace NL.Text {
+﻿namespace NLCommon.Text {
 	internal class TextTypeConverter {
 		internal Dictionary<char, char> Characters;
 

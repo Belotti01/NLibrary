@@ -2,7 +2,7 @@
 
 #nullable enable
 
-namespace NL.Utils {
+namespace NLCommon.Utils {
 	public class ArgumentsReader {
 		public string? this[params string[] argumentAliases] {
 			get {

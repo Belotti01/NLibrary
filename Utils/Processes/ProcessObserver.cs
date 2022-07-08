@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace NL.Utils.Processes {
+namespace NLCommon.Utils.Processes {
 	public class ProcessObserver : IDisposable {
 		public Process Process { get; protected init; }
 		protected Queue<string> _outputStream;

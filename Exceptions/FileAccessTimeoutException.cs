@@ -1,4 +1,4 @@
-﻿namespace NL.Exceptions {
+﻿namespace NLCommon.Exceptions {
 	public class FileAccessTimeoutException : Exception {
 		public string Filepath { get; private set; }
 		public int Timeout { get; private set; }

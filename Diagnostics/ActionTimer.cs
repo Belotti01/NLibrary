@@ -1,7 +1,7 @@
-﻿using NL.Exceptions;
+﻿using NLCommon.Exceptions;
 using System.Diagnostics;
 
-namespace NL.Diagnostics {
+namespace NLCommon.Diagnostics {
 
 	/// <summary>
 	///		Can be used to precisely time single or multiple iterations

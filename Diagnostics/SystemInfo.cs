@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace NL.Diagnostics {
+namespace NLCommon.Diagnostics {
 	public static class SystemInfo {
 
 		[DllImport("kernel32.dll")]

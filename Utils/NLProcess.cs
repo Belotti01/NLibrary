@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace NL.Utils {
+namespace NLCommon.Utils {
 	public static class NLProcess {
 
 		public static Process StartShellProcess(string filepath, string arguments, bool showWindow = true) {

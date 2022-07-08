@@ -1,4 +1,4 @@
-﻿namespace NL.Utils {
+﻿namespace NLCommon.Utils {
 	public static class NLText {
 
 		/// <summary>

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using NL.Serialization;
+using NLCommon.Serialization;
 
-namespace NL.Production.Shared {
+namespace NLCommon.Production.Shared {
 
 	public class SharedConfiguration {
 		[JsonIgnore]

@@ -1,6 +1,6 @@
-﻿using NL.Utils;
+﻿using NLCommon.Utils;
 
-namespace NL.Prompt {
+namespace NLCommon.Prompt {
 
 	public static class Output {
 		private static int _indentation = 0;

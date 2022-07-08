@@ -1,4 +1,4 @@
-﻿namespace NL.Exceptions {
+﻿namespace NLCommon.Exceptions {
 
 	/// <summary>
 	///		Similar to <see cref="NullReferenceException"/>, but specific for the type

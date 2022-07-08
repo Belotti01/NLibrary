@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace NL.Utils {
+namespace NLCommon.Utils {
 
 	public static class NLFile {
 

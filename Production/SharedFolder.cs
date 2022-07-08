@@ -1,8 +1,8 @@
-﻿using NL.Production.Shared;
-using NL.Serialization;
+﻿using NLCommon.Production.Shared;
+using NLCommon.Serialization;
 using System.IO;
 
-namespace NL.Production {
+namespace NLCommon.Production {
 	/// <summary>
 	///     Access point to files, folders and settings shared
 	///     between programs.

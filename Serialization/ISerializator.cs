@@ -1,4 +1,4 @@
-﻿namespace NL.Serialization {
+﻿namespace NLCommon.Serialization {
 	public interface ISerializator {
 
 		static abstract void Serialize(object obj, string filepath);

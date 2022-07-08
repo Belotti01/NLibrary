@@ -1,9 +1,9 @@
-﻿using NL.Exceptions;
+﻿using NLCommon.Exceptions;
 using System.IO;
 using System.Threading;
 using System.Timers;
 
-namespace NL.Serialization {
+namespace NLCommon.Serialization {
 	/// <summary>
 	///     Collection of methods used to safely access files as text files, without risking
 	///     deadlocks or <see cref="IOException"/>s.

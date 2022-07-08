@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NL.Utils {
+namespace NLCommon.Utils {
 	public static class NLRandom {
 		public static char RandomLetter(bool randomCase = true) {
 			char c = (char)Random.Shared.Next('A', 'Z' + 1);

@@ -1,7 +1,7 @@
 ﻿using MongoDB.Driver;
-using NL.Exceptions;
+using NLCommon.Exceptions;
 
-namespace NL.Database.MongoDB {
+namespace NLCommon.Database.MongoDB {
 
 	/// <summary>
 	///     Access point object to a MongoDB database.

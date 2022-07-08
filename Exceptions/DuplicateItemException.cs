@@ -1,4 +1,4 @@
-﻿namespace NL.Exceptions {
+﻿namespace NLCommon.Exceptions {
 	public class DuplicateItemException : Exception {
 
 		public DuplicateItemException(string parameterName, string duplicateValue)

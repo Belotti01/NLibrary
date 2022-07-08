@@ -1,9 +1,9 @@
 ﻿#nullable enable
-using NL.Security.Encryption;
+using NLCommon.Security.Encryption;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace NL.Extensions {
+namespace NLCommon.Extensions {
 
 	public static class Strings {
 
